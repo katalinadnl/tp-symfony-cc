@@ -63,6 +63,13 @@ services:
           - target: 8080
             published: ${ADMINER_PORT:-8080}
             protocol: tcp
+            
+    mailhog:
+        image: mailhog/mailhog
+        container_name: mailhog
+        ports:
+            - "1025:1025"  # Port SMTP
+            - "8025:8025"  # Interface web
 volumes:
   caddy_data:
   caddy_config:
