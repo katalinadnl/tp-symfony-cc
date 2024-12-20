@@ -24,13 +24,12 @@ security:
                 target: app_home      # Redirection vers l'accueil après déconnexion
 
     access_control:
-        # Autorise l'accès à la page d'accueil et à la page de login sans être connecté
         - { path: ^/$, roles: PUBLIC_ACCESS }
         - { path: ^/login$, roles: PUBLIC_ACCESS }
         - { path: ^/logout$, roles: PUBLIC_ACCESS }
-        
-        # Restreint l'accès aux autres pages pour les utilisateurs connectés uniquement
+        - { path: ^/forgot-password$, roles: PUBLIC_ACCESS }  # Ajout pour la page de mot de passe oublié
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/user, roles: ROLE_USER }
         - { path: ^/banned, roles: ROLE_BANNED }
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+    
