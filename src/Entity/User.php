@@ -6,10 +6,12 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -26,29 +28,10 @@ class User
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $role = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
     private ?string $password = null;
 
-    /**
-     * @var Collection<int, UserProject>
-     */
-    #[ORM\OneToMany(targetEntity: UserProject::class, mappedBy: 'user_id')]
-    private Collection $userProjects;
-
-    /**
-     * @var Collection<int, UserTask>
-     */
-    #[ORM\OneToMany(targetEntity: UserTask::class, mappedBy: 'user_id')]
-    private Collection $userTasks;
-
-
-    public function __construct()
-    {
-        $this->userProjects = new ArrayCollection();
-        $this->userTasks = new ArrayCollection();
-    }
+    #[ORM\Column(type: 'json', nullable: true)]
+    private array $roles = [];
 
     public function getId(): ?int
     {
@@ -63,7 +46,6 @@ class User
     public function setName(string $name): static
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -75,7 +57,6 @@ class User
     public function setSurname(?string $surname): static
     {
         $this->surname = $surname;
-
         return $this;
     }
 
@@ -87,19 +68,6 @@ class User
     public function setEmail(string $email): static
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
-
-    public function setRole(string $role): static
-    {
-        $this->role = $role;
-
         return $this;
     }
 
@@ -108,71 +76,32 @@ class User
         return $this->password;
     }
 
-    public function setPassword(?string $password): static
+    public function setPassword(string $password): static
     {
         $this->password = $password;
-
         return $this;
     }
 
-    /**
-     * @return Collection<int, UserProject>
-     */
-    public function getUserProjects(): Collection
+    public function getRoles(): array
     {
-        return $this->userProjects;
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER'; // Rôle par défaut
+        return array_unique($roles);
     }
 
-    public function addUserProject(UserProject $userProject): static
+    public function setRoles(array $roles): static
     {
-        if (!$this->userProjects->contains($userProject)) {
-            $this->userProjects->add($userProject);
-            $userProject->setUserId($this);
-        }
-
+        $this->roles = $roles;
         return $this;
     }
 
-    public function removeUserProject(UserProject $userProject): static
+    public function eraseCredentials(): void
     {
-        if ($this->userProjects->removeElement($userProject)) {
-            // set the owning side to null (unless already changed)
-            if ($userProject->getUserId() === $this) {
-                $userProject->setUserId(null);
-            }
-        }
-
-        return $this;
+        // Méthode requise par UserInterface
     }
 
-    /**
-     * @return Collection<int, UserTask>
-     */
-    public function getUserTasks(): Collection
+    public function getUserIdentifier(): string
     {
-        return $this->userTasks;
+        return $this->email;
     }
-
-    public function addUserTask(UserTask $userTask): static
-    {
-        if (!$this->userTasks->contains($userTask)) {
-            $this->userTasks->add($userTask);
-            $userTask->setUserId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUserTask(UserTask $userTask): static
-    {
-        if ($this->userTasks->removeElement($userTask)) {
-            // set the owning side to null (unless already changed)
-            if ($userTask->getUserId() === $this) {
-                $userTask->setUserId(null);
-            }
-        }
-
-        return $this;
-    }
-
 }

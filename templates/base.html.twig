@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Gestion de Projets{% endblock %}</title>
+    <link href="{{ asset('build/app.css') }}" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-900 font-sans antialiased">
+
+<header class="bg-teal-500 py-4 shadow-sm">
+    <nav class="container mx-auto flex justify-between items-center">
+        <a href="{{ path('app_home') }}" class="text-white text-2xl font-semibold">
+            Gestion de Projets
+        </a>
+
+        <ul class="flex space-x-4">
+            {% if app.user %}
+                <li>
+                    <a href="{{ path('app_logout') }}" class="text-white hover:text-red-400">
+                        Se déconnecter
+                    </a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="{{ path('app_login') }}" class="text-white hover:text-orange-400">
+                        Se connecter
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>
+
+<main class="container mx-auto my-12 px-4">
+    <div class="bg-white p-6 rounded-lg shadow-sm">
+        {% block body %}{% endblock %}
+    </div>
+</main>
+
+<footer class="bg-teal-500 py-4 text-center text-white">
+    <p>&copy; 2024 Gestion de Projets</p>
+</footer>
+
+</body>
+</html>
