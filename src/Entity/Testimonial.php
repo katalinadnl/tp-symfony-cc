@@ -21,9 +21,11 @@ class Testimonial
     private ?\DateTimeInterface $date = null;
 
     #[ORM\ManyToOne(inversedBy: 'testimonials')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
     private ?Client $client = null;
 
     #[ORM\ManyToOne(inversedBy: 'testimonials')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
     private ?Project $project = null;
 
     public function getId(): ?int

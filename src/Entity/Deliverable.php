@@ -23,12 +23,13 @@ class Deliverable
     private ?\DateTimeInterface $due_time = null;
 
     #[ORM\ManyToOne(inversedBy: 'delivrables')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
     private ?Project $project = null;
 
     /**
      * @var Collection<int, Task>
      */
-    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'deliverable')]
+    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'deliverable', cascade: ['remove'], orphanRemoval: true)]
     private Collection $tasks;
 
     public function __construct()

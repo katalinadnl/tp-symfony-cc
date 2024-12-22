@@ -30,13 +30,13 @@ class Client
     /**
      * @var Collection<int, Project>
      */
-    #[ORM\OneToMany(targetEntity: Project::class, mappedBy: 'client')]
+    #[ORM\OneToMany(targetEntity: Project::class, mappedBy: 'client', cascade: ['remove'], orphanRemoval: true)]
     private Collection $projects;
 
     /**
      * @var Collection<int, Testimonial>
      */
-    #[ORM\OneToMany(targetEntity: Testimonial::class, mappedBy: 'client')]
+    #[ORM\OneToMany(targetEntity: Testimonial::class, mappedBy: 'client', cascade: ['remove'], orphanRemoval: true)]
     private Collection $testimonials;
 
     public function __construct()

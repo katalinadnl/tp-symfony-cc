@@ -29,36 +29,37 @@ class Project
     private ?\DateTimeInterface $end_date = null;
 
     #[ORM\ManyToOne(inversedBy: 'projects')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
     private ?Client $client = null;
 
     /**
      * @var Collection<int, Deliverable>
      */
-    #[ORM\OneToMany(targetEntity: Deliverable::class, mappedBy: 'project')]
+    #[ORM\OneToMany(targetEntity: Deliverable::class, mappedBy: 'project', cascade: ['remove'], orphanRemoval: true)]
     private Collection $delivrables;
 
     /**
      * @var Collection<int, Task>
      */
-    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'project')]
+    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'project', cascade: ['remove'], orphanRemoval: true)]
     private Collection $tasks;
 
     /**
      * @var Collection<int, Testimonial>
      */
-    #[ORM\OneToMany(targetEntity: Testimonial::class, mappedBy: 'project')]
+    #[ORM\OneToMany(targetEntity: Testimonial::class, mappedBy: 'project', cascade: ['remove'], orphanRemoval: true)]
     private Collection $testimonials;
 
     /**
      * @var Collection<int, UserProject>
      */
-    #[ORM\OneToMany(targetEntity: UserProject::class, mappedBy: 'project_id')]
+    #[ORM\OneToMany(targetEntity: UserProject::class, mappedBy: 'project_id', cascade: ['remove'], orphanRemoval: true)]
     private Collection $userProjects;
 
     /**
      * @var Collection<int, ProjectCategory>
      */
-    #[ORM\OneToMany(targetEntity: ProjectCategory::class, mappedBy: 'project_id')]
+    #[ORM\OneToMany(targetEntity: ProjectCategory::class, mappedBy: 'project_id', cascade: ['remove'], orphanRemoval: true)]
     private Collection $projectCategories;
 
 

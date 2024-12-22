@@ -29,15 +29,17 @@ class Task
     private ?string $status = null;
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
     private ?Project $project = null;
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
     private ?Deliverable $deliverable = null;
 
     /**
      * @var Collection<int, UserTask>
      */
-    #[ORM\OneToMany(targetEntity: UserTask::class, mappedBy: 'task_id')]
+    #[ORM\OneToMany(targetEntity: UserTask::class, mappedBy: 'task_id', cascade: ['remove'], orphanRemoval: true)]
     private Collection $userTasks;
 
     public function __construct()

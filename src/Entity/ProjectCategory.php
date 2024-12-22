@@ -14,9 +14,11 @@ class ProjectCategory
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'projectCategories')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
     private ?Project $project_id = null;
 
     #[ORM\ManyToOne(inversedBy: 'projectCategories')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
     private ?Category $category_id = null;
 
     public function getId(): ?int

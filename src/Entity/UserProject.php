@@ -14,10 +14,11 @@ class UserProject
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'userProjects')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
     private ?User $user_id = null;
 
     #[ORM\ManyToOne(inversedBy: 'userProjects')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
     private ?Project $project_id = null;
 
     public function getId(): ?int

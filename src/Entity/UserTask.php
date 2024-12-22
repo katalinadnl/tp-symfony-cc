@@ -14,9 +14,11 @@ class UserTask
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'userTasks')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
     private ?User $user_id = null;
 
     #[ORM\ManyToOne(inversedBy: 'userTasks')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
     private ?Task $task_id = null;
 
     public function getId(): ?int
