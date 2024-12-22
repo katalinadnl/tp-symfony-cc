@@ -3,45 +3,62 @@
 {% block title %}Profil Utilisateur{% endblock %}
 
 {% block body %}
-    <h1>Bienvenue sur votre profil, {{ app.user.name }}</h1>
+    <h1 class="text-3xl font-bold text-teal-500 mb-6">Bienvenue sur votre profil, {{ app.user.name }}</h1>
 
-    <table class="table">
-        <thead>
+    <div class="overflow-x-auto">
+        <table class="min-w-full table-auto border-collapse border border-gray-300 shadow-md">
+            <thead class="bg-teal-500 text-white">
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Email</th>
-                <th>Password</th>
-                <th>Roles</th>
-                <th>ResetToken</th>
-                <th>ResetTokenExpiresAt</th>
-                <th>actions</th>
+                <th class="px-4 py-2 border border-gray-300 text-left">ID</th>
+                <th class="px-4 py-2 border border-gray-300 text-left">Nom</th>
+                <th class="px-4 py-2 border border-gray-300 text-left">Prénom</th>
+                <th class="px-4 py-2 border border-gray-300 text-left">Email</th>
+                <th class="px-4 py-2 border border-gray-300 text-left">Mot de passe</th>
+                <th class="px-4 py-2 border border-gray-300 text-left">Rôles</th>
+                <th class="px-4 py-2 border border-gray-300 text-left">Token Réinitialisation</th>
+                <th class="px-4 py-2 border border-gray-300 text-left">Expiration Token</th>
+                <th class="px-4 py-2 border border-gray-300 text-center">Actions</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.surname }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.password }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.resetToken }}</td>
-                <td>{{ user.resetTokenExpiresAt ? user.resetTokenExpiresAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_usr_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_usr_edit', {'id': user.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr class="hover:bg-gray-100">
+                    <td class="px-4 py-2 border border-gray-300">{{ user.id }}</td>
+                    <td class="px-4 py-2 border border-gray-300">{{ user.name }}</td>
+                    <td class="px-4 py-2 border border-gray-300">{{ user.surname }}</td>
+                    <td class="px-4 py-2 border border-gray-300">{{ user.email }}</td>
+                    <td class="px-4 py-2 border border-gray-300">{{ user.password }}</td>
+                    <td class="px-4 py-2 border border-gray-300">{{ user.roles ? user.roles|json_encode : '' }}</td>
+                    <td class="px-4 py-2 border border-gray-300">{{ user.resetToken }}</td>
+                    <td class="px-4 py-2 border border-gray-300">
+                        {{ user.resetTokenExpiresAt ? user.resetTokenExpiresAt|date('Y-m-d H:i:s') : '' }}
+                    </td>
+                    <td class="px-4 py-2 border border-gray-300 text-center">
+                        <a href="{{ path('app_usr_show', {'id': user.id}) }}"
+                           class="text-blue-500 hover:text-blue-700 mr-2">
+                            Voir
+                        </a>
+                        <a href="{{ path('app_usr_edit', {'id': user.id}) }}"
+                           class="text-yellow-500 hover:text-yellow-700">
+                            Modifier
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9" class="px-4 py-2 text-center text-gray-500">
+                        Aucun enregistrement trouvé.
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-    <a href="{{ path('app_usr_new') }}">Create new</a>
+    <div class="mt-6">
+        <a href="{{ path('app_usr_new') }}"
+           class="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600 transition">
+            Créer un nouvel utilisateur
+        </a>
+    </div>
 {% endblock %}

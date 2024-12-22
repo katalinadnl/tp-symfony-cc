@@ -1,41 +1,58 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Client index{% endblock %}
+{% block title %}Liste des Clients{% endblock %}
 
 {% block body %}
-    <h1>Client index</h1>
+    <h1 class="text-3xl font-bold text-teal-500 mb-6">Liste des Clients</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Created_at</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for client in clients %}
-            <tr>
-                <td>{{ client.id }}</td>
-                <td>{{ client.name }}</td>
-                <td>{{ client.email }}</td>
-                <td>{{ client.phone }}</td>
-                <td>{{ client.createdAt ? client.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_client_show', {'id': client.id}) }}">show</a>
-                    <a href="{{ path('app_client_edit', {'id': client.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="mb-4 text-right">
+        <a href="{{ path('app_client_new') }}"
+           class="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600 transition">
+            Créer un nouveau client
+        </a>
+    </div>
 
-    <a href="{{ path('app_client_new') }}">Create new</a>
+    <div class="overflow-x-auto">
+        <table class="min-w-full table-auto border-collapse border border-gray-300 shadow-md">
+            <thead class="bg-teal-500 text-white">
+            <tr>
+                <th class="px-4 py-2 border border-gray-300 text-left">ID</th>
+                <th class="px-4 py-2 border border-gray-300 text-left">Nom</th>
+                <th class="px-4 py-2 border border-gray-300 text-left">Email</th>
+                <th class="px-4 py-2 border border-gray-300 text-left">Téléphone</th>
+                <th class="px-4 py-2 border border-gray-300 text-left">Créé le</th>
+                <th class="px-4 py-2 border border-gray-300 text-center">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for client in clients %}
+                <tr class="hover:bg-gray-100">
+                    <td class="px-4 py-2 border border-gray-300">{{ client.id }}</td>
+                    <td class="px-4 py-2 border border-gray-300">{{ client.name }}</td>
+                    <td class="px-4 py-2 border border-gray-300">{{ client.email }}</td>
+                    <td class="px-4 py-2 border border-gray-300">{{ client.phone }}</td>
+                    <td class="px-4 py-2 border border-gray-300">
+                        {{ client.createdAt ? client.createdAt|date('Y-m-d H:i:s') : '' }}
+                    </td>
+                    <td class="px-4 py-2 border border-gray-300 text-center">
+                        <a href="{{ path('app_client_show', {'id': client.id}) }}"
+                           class="text-blue-500 hover:text-blue-700 mr-2">
+                            Voir
+                        </a>
+                        <a href="{{ path('app_client_edit', {'id': client.id}) }}"
+                           class="text-yellow-500 hover:text-yellow-700">
+                            Modifier
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6" class="px-4 py-2 text-center text-gray-500">
+                        Aucun enregistrement trouvé.
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

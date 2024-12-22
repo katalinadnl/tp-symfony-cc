@@ -16,53 +16,61 @@
 
         <ul class="flex space-x-4">
             {% if app.user %}
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if is_granted('ROLE_BANNED') %}
                     <li>
-                        <a href="{{ path('app_category_index') }}" class="text-white hover:text-gray-300">
-                            Catégories
-                        </a>
+                        <p class="text-red-500 font-semibold">
+                            Vous êtes banni. Contactez l'administrateur pour plus d'informations.
+                        </p>
                     </li>
-                    <li>
-                        <a href="{{ path('app_client_index') }}" class="text-white hover:text-gray-300">
-                            Clients
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('app_project_index') }}" class="text-white hover:text-gray-300">
-                            Projets
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('app_deliverable_index') }}" class="text-white hover:text-gray-300">
-                            Livrables
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('app_task_index') }}" class="text-white hover:text-gray-300">
-                            Tâches
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('app_testimonial_index') }}" class="text-white hover:text-gray-300">
-                            Témoignages
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('app_usr_index') }}" class="text-white hover:text-gray-300">
-                            Utilisateurs
-                        </a>
-                    </li>
-                {% elseif is_granted('ROLE_USER') %}
-                    <li>
-                        <a href="{{ path('app_project_index') }}" class="text-white hover:text-gray-300">
-                            Mes Projets
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('app_task_index') }}" class="text-white hover:text-gray-300">
-                            Mes Tâches
-                        </a>
-                    </li>
+                {% else %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li>
+                            <a href="{{ path('app_category_index') }}" class="text-white hover:text-gray-300">
+                                Catégories
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_client_index') }}" class="text-white hover:text-gray-300">
+                                Clients
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_project_index') }}" class="text-white hover:text-gray-300">
+                                Projets
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_deliverable_index') }}" class="text-white hover:text-gray-300">
+                                Livrables
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_task_index') }}" class="text-white hover:text-gray-300">
+                                Tâches
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_testimonial_index') }}" class="text-white hover:text-gray-300">
+                                Témoignages
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_usr_index') }}" class="text-white hover:text-gray-300">
+                                Utilisateurs
+                            </a>
+                        </li>
+                    {% elseif is_granted('ROLE_USER') %}
+                        <li>
+                            <a href="{{ path('app_project_index') }}" class="text-white hover:text-gray-300">
+                                Mes Projets
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_task_index') }}" class="text-white hover:text-gray-300">
+                                Mes Tâches
+                            </a>
+                        </li>
+                    {% endif %}
                 {% endif %}
                 <li>
                     <a href="{{ path('app_logout') }}" class="text-white hover:text-red-400">

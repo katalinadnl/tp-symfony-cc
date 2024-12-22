@@ -20,16 +20,30 @@ security:
             custom_authenticator: App\Security\LoginAuthenticator
             entry_point: App\Security\LoginAuthenticator
             logout:
-                path: app_logout      # Chemin pour la déconnexion
-                target: app_home      # Redirection vers l'accueil après déconnexion
-
-    access_control:
-        - { path: ^/$, roles: PUBLIC_ACCESS }
-        - { path: ^/login$, roles: PUBLIC_ACCESS }
-        - { path: ^/logout$, roles: PUBLIC_ACCESS }
-        - { path: ^/forgot-password$, roles: PUBLIC_ACCESS }  # Ajout pour la page de mot de passe oublié
-        - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/user, roles: ROLE_USER }
-        - { path: ^/banned, roles: ROLE_BANNED }
-        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+                path: app_logout
+                target: app_home
     
+    role_hierarchy:
+        ROLE_ADMIN:     [ROLE_USER]
+        ROLE_USER:    [ ]
+    
+    access_control:
+        # Pages accessibles à tous
+        - { path: ^/login$, roles: PUBLIC_ACCESS }
+        - { path: ^/forgot-password$, roles: PUBLIC_ACCESS }
+
+        # Admin accès à tout
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+
+        # Pages pour les bannis
+        - { path: ^/$, roles: IS_AUTHENTICATED_FULLY }  # Home page
+        - { path: ^/logout$, roles: IS_AUTHENTICATED_FULLY }  # Logout
+        
+        # Bloquer les bannis pour tout sauf home et logout
+        - { path: ^/(?!$|logout$), roles: "!ROLE_BANNED" }
+        
+        # Routes utilisateur standard
+        - { path: ^/user, roles: ROLE_USER }
+        - { path: ^/project, roles: ROLE_USER }
+        - { path: ^/task, roles: ROLE_USER }

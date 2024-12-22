@@ -12,6 +12,7 @@ use App\Form\ResetPasswordRequestFormType;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ResetPasswordController extends AbstractController
 {

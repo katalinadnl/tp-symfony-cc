@@ -1,37 +1,54 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Testimonial index{% endblock %}
+{% block title %}Liste des Témoignages{% endblock %}
 
 {% block body %}
-    <h1>Testimonial index</h1>
+    <h1 class="text-3xl font-bold text-teal-500 mb-6">Liste des Témoignages</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Body</th>
-                <th>Date</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for testimonial in testimonials %}
-            <tr>
-                <td>{{ testimonial.id }}</td>
-                <td>{{ testimonial.body }}</td>
-                <td>{{ testimonial.date ? testimonial.date|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_testimonial_show', {'id': testimonial.id}) }}">show</a>
-                    <a href="{{ path('app_testimonial_edit', {'id': testimonial.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="mb-4 text-right">
+        <a href="{{ path('app_testimonial_new') }}"
+           class="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600 transition">
+            Créer un nouveau témoignage
+        </a>
+    </div>
 
-    <a href="{{ path('app_testimonial_new') }}">Create new</a>
+    <div class="overflow-x-auto">
+        <table class="min-w-full table-auto border-collapse border border-gray-300 shadow-md">
+            <thead class="bg-teal-500 text-white">
+            <tr>
+                <th class="px-4 py-2 border border-gray-300 text-left">ID</th>
+                <th class="px-4 py-2 border border-gray-300 text-left">Contenu</th>
+                <th class="px-4 py-2 border border-gray-300 text-left">Date</th>
+                <th class="px-4 py-2 border border-gray-300 text-center">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for testimonial in testimonials %}
+                <tr class="hover:bg-gray-100">
+                    <td class="px-4 py-2 border border-gray-300">{{ testimonial.id }}</td>
+                    <td class="px-4 py-2 border border-gray-300">{{ testimonial.body }}</td>
+                    <td class="px-4 py-2 border border-gray-300">
+                        {{ testimonial.date ? testimonial.date|date('Y-m-d H:i:s') : '' }}
+                    </td>
+                    <td class="px-4 py-2 border border-gray-300 text-center">
+                        <a href="{{ path('app_testimonial_show', {'id': testimonial.id}) }}"
+                           class="text-blue-500 hover:text-blue-700 mr-2">
+                            Voir
+                        </a>
+                        <a href="{{ path('app_testimonial_edit', {'id': testimonial.id}) }}"
+                           class="text-yellow-500 hover:text-yellow-700">
+                            Modifier
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="px-4 py-2 text-center text-gray-500">
+                        Aucun enregistrement trouvé.
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

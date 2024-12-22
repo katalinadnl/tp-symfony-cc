@@ -1,30 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Testimonial{% endblock %}
+{% block title %}Détails du Témoignage{% endblock %}
 
 {% block body %}
-    <h1>Testimonial</h1>
+    <h1 class="text-3xl font-bold text-teal-500 mb-6">Détails du Témoignage</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ testimonial.id }}</td>
+    <div class="bg-white p-6 rounded-lg shadow-md">
+        <table class="min-w-full table-auto border-collapse border border-gray-300 shadow-sm">
+            <tbody>
+            <tr class="bg-gray-100">
+                <th class="px-4 py-2 border border-gray-300 text-left text-gray-600 font-medium">ID</th>
+                <td class="px-4 py-2 border border-gray-300">{{ testimonial.id }}</td>
             </tr>
             <tr>
-                <th>Body</th>
-                <td>{{ testimonial.body }}</td>
+                <th class="px-4 py-2 border border-gray-300 text-left text-gray-600 font-medium">Contenu</th>
+                <td class="px-4 py-2 border border-gray-300">{{ testimonial.body }}</td>
             </tr>
-            <tr>
-                <th>Date</th>
-                <td>{{ testimonial.date ? testimonial.date|date('Y-m-d H:i:s') : '' }}</td>
+            <tr class="bg-gray-100">
+                <th class="px-4 py-2 border border-gray-300 text-left text-gray-600 font-medium">Date</th>
+                <td class="px-4 py-2 border border-gray-300">
+                    {{ testimonial.date ? testimonial.date|date('Y-m-d H:i:s') : '' }}
+                </td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 
-    <a href="{{ path('app_testimonial_index') }}">back to list</a>
+    <div class="mt-6 flex space-x-4">
+        <a href="{{ path('app_testimonial_index') }}"
+           class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition">
+            Retour à la liste
+        </a>
 
-    <a href="{{ path('app_testimonial_edit', {'id': testimonial.id}) }}">edit</a>
+        <a href="{{ path('app_testimonial_edit', {'id': testimonial.id}) }}"
+           class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition">
+            Modifier
+        </a>
 
-    {{ include('testimonial/_delete_form.html.twig') }}
+        {{ include('testimonial/_delete_form.html.twig') }}
+    </div>
 {% endblock %}
