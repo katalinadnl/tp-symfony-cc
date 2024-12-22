@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Deliverable{% endblock %}
+
+{% block body %}
+    <h1>Edit Deliverable</h1>
+
+    {{ include('deliverable/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_deliverable_index') }}">back to list</a>
+
+    {{ include('deliverable/_delete_form.html.twig') }}
+{% endblock %}

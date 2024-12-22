@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Deliverable{% endblock %}
+
+{% block body %}
+    <h1>Create new Deliverable</h1>
+
+    {{ include('deliverable/_form.html.twig') }}
+
+    <a href="{{ path('app_deliverable_index') }}">back to list</a>
+{% endblock %}
