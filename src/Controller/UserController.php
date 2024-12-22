@@ -23,6 +23,12 @@ final class UserController extends AbstractController
         ]);
     }
 
+    #[Route('/profile', name: 'app_usr_profile', methods: ['GET'])]
+    public function profile(): Response
+    {
+        return $this->render('usr/profile.html.twig');
+    }
+
     #[Route('/new', name: 'app_usr_new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response

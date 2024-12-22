@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil Utilisateur{% endblock %}
+
+{% block body %}
+    <h1 class="text-3xl font-bold text-teal-500 mb-6">
+        Bienvenue sur votre profil, {{ app.user.name }}
+    </h1>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full table-auto border-collapse border border-gray-300 shadow-md">
+            <thead class="bg-teal-500 text-white">
+            <tr>
+                <th class="px-4 py-2 border border-gray-300 text-left">ID</th>
+                <th class="px-4 py-2 border border-gray-300 text-left">Nom</th>
+                <th class="px-4 py-2 border border-gray-300 text-left">Prénom</th>
+                <th class="px-4 py-2 border border-gray-300 text-left">Email</th>
+                <th class="px-4 py-2 border border-gray-300 text-left">Rôles</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="hover:bg-gray-100">
+                <td class="px-4 py-2 border border-gray-300">{{ app.user.id }}</td>
+                <td class="px-4 py-2 border border-gray-300">{{ app.user.name }}</td>
+                <td class="px-4 py-2 border border-gray-300">{{ app.user.surname }}</td>
+                <td class="px-4 py-2 border border-gray-300">{{ app.user.email }}</td>
+                <td class="px-4 py-2 border border-gray-300">{{ app.user.roles ? app.user.roles|json_encode : '' }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
