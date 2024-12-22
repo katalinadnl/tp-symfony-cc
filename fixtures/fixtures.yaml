@@ -1,40 +1,77 @@
 App\Entity\Client:
     client_{1..5}:
-        name: "<name()>"
-        email: "<email()>"
+        name: "<company()>"
+        email: "<safeEmail()>"
         phone: "<phoneNumber()>"
         created_at: "<dateTimeThisYear()>"
 
 App\Entity\Category:
-    category_{1..3}:
-        name: "<word()>"
-        description: "<sentence()>"
+    category_{1..5}:
+        name: "<randomElement(['Development', 'Marketing', 'Design', 'Sales', 'Management'])>"
+        description: "<sentence(10)>"
 
 App\Entity\Project:
-    project_{1..5}:
-        name: "<sentence(3)>"
-        description: "<paragraph()>"
-        start_date: "<dateTimeBetween('-1 year', 'now')>"
-        end_date: "<dateTimeBetween('now', '+1 year')>"
+    project_{1..10}:
+        name: "<randomElement(['Website Redesign', 'Product Launch', 'CRM Implementation', 'SEO Optimization', 'Social Media Campaign'])>"
+        description: "<paragraph(2)>"
+        start_date: "<dateTimeBetween('-1 year', '-6 months')>"
+        end_date: "<dateTimeBetween('now', '+6 months')>"
         client: "@client_<numberBetween(1, 5)>"
 
 App\Entity\Task:
-    task_{1..10}:
-        name: "<sentence(4)>"
-        description: "<paragraph()>"
-        due_date: "<dateTimeBetween('now', '+1 year')>"
+    task_{1..20}:
+        name: "<randomElement(['Create Wireframes', 'Develop Backend API', 'Prepare Marketing Materials', 'Test Functionality', 'Deploy to Production'])>"
+        description: "<sentence(15)>"
+        due_date: "<dateTimeBetween('now', '+3 months')>"
         status: "<randomElement(['ongoing', 'completed', 'pending'])>"
-        project: "@project_<numberBetween(1, 5)>"
+        project: "@project_<numberBetween(1, 10)>"
 
 App\Entity\Deliverable:
-    deliverable_{1..5}:
-        name: "<sentence(3)>"
-        due_time: "<dateTimeBetween('now', '+6 months')>"
-        project: "@project_<numberBetween(1, 5)>"
+    deliverable_{1..10}:
+        name: "<randomElement(['Final Report', 'Prototype', 'Landing Page', 'Marketing Plan', 'User Guide'])>"
+        due_time: "<dateTimeBetween('+1 month', '+4 months')>"
+        project: "@project_<numberBetween(1, 10)>"
 
 App\Entity\Testimonial:
-    testimonial_{1..5}:
-        body: "<paragraph()>"
+    testimonial_{1..10}:
+        body: "<randomElement(['Great collaboration!', 'Delivered on time and exceeded expectations.', 'Very professional team.', 'Highly recommend.', 'Outstanding work!'])>"
         date: "<dateTimeThisYear()>"
         client: "@client_<numberBetween(1, 5)>"
-        project: "@project_<numberBetween(1, 5)>"
+        project: "@project_<numberBetween(1, 10)>"
+
+App\Entity\User:
+    user_{1..5}:
+        name: "<firstName()>"
+        surname: "<lastName()>"
+        email: "<safeEmail()>"
+        password: "password123"
+        roles: '["ROLE_USER"]'
+
+    admin_user_{1..2}:
+        name: "<firstName()>"
+        surname: "<lastName()>"
+        email: "<safeEmail()>"
+        password: "admin123"
+        roles: '["ROLE_ADMIN"]'
+
+    banned_user_{1..2}:
+        name: "<firstName()>"
+        surname: "<lastName()>"
+        email: "<safeEmail()>"
+        password: "banned123"
+        roles: '["ROLE_BANNED"]'
+
+App\Entity\UserProject:
+    user_project_{1..10}:
+        user_id: "@user_<numberBetween(1, 5)>"
+        project_id: "@project_<numberBetween(1, 10)>"
+
+App\Entity\UserTask:
+    user_task_{1..10}:
+        user_id: "@user_<numberBetween(1, 5)>"
+        task_id: "@task_<numberBetween(1, 20)>"
+
+App\Entity\ProjectCategory:
+    project_category_{1..10}:
+        project_id: "@project_<numberBetween(1, 10)>"
+        category_id: "@category_<numberBetween(1, 5)>"

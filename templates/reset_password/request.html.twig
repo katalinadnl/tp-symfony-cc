@@ -1,11 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h2>Mot de passe oublié</h2>
-    <p>Entrez votre email pour recevoir un lien de réinitialisation de mot de passe.</p>
+    <div class="max-w-lg mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
+        <h2 class="text-2xl font-bold text-teal-600 mb-4">Mot de passe oublié</h2>
+        <p class="text-gray-700 mb-6">Entrez votre email pour recevoir un lien de réinitialisation de mot de passe.</p>
 
-    {{ form_start(form) }}
-    {{ form_row(form.email) }}
-    <button type="submit" class="btn btn-primary">Envoyer le lien de réinitialisation</button>
-    {{ form_end(form) }}
+        <form method="post" class="space-y-4">
+            {{ form_start(form) }}
+            <div class="flex flex-col space-y-1">
+                {{ form_label(form.email, null, { 'label_attr': { 'class': 'font-medium text-gray-600' } }) }}
+                {{ form_widget(form.email, { 'attr': { 'class': 'border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500' } }) }}
+                {{ form_errors(form.email) }}
+            </div>
+            <button type="submit" class="w-full bg-teal-500 text-white font-semibold py-2 px-4 rounded hover:bg-teal-600 transition">
+                Envoyer le lien de réinitialisation
+            </button>
+            {{ form_end(form) }}
+        </form>
+    </div>
 {% endblock %}
